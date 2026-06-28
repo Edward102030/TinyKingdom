@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>Tiny Kingdom</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home">
+  <canvas id="home-canvas"></canvas>
+  <div id="home-vignette"></div>
+  <div id="home-card">
+    <div id="home-crown">👑</div>
+    <h1 id="home-title">TINY<span>KINGDOM</span></h1>
+    <p id="home-sub">Rule wisely. Survive the seasons. Build a legacy.</p>
+    <div id="home-streak" class="hidden">
+      <span>🔥</span><span id="streak-text">streak!</span>
+    </div>
+    <div id="home-btns">
+      <button id="btn-new" class="hbtn primary">⚔ New Kingdom</button>
+      <button id="btn-continue" class="hbtn secondary">📜 Continue</button>
+    </div>
+    <div id="home-records" class="hidden">
+      <div class="rec-row"><span>Best Score</span><span id="rec-best">0</span></div>
+      <div class="rec-row"><span>Kingdoms</span><span id="rec-runs">0</span></div>
+    </div>
+    <button id="btn-clear-data" class="clear-btn">⚠ Clear all data</button>
+    <p id="home-hint">2–30 min sessions · Weeks to master</p>
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="game" class="hidden">
+  <canvas id="kingdom-canvas"></canvas>
+
+  <div id="hud-top">
+    <div id="day-badge">
+      <span id="season-icon">🌱</span>
+      <span id="day-label">Day 1</span>
+      <span id="season-name">Spring</span>
+    </div>
+    <div class="stat-chip">
+      <span class="sc-icon">⚜</span>
+      <div class="sc-body">
+        <span class="sc-val" id="v-gold">100</span>
+        <div class="sc-bar"><div class="sc-fill" id="bar-gold"></div></div>
+      </div>
+    </div>
+    <div class="stat-chip">
+      <span class="sc-icon">🌾</span>
+      <div class="sc-body">
+        <span class="sc-val" id="v-food">80</span>
+        <div class="sc-bar"><div class="sc-fill" id="bar-food"></div></div>
+      </div>
+    </div>
+    <div class="stat-chip">
+      <span class="sc-icon">⚔</span>
+      <div class="sc-body">
+        <span class="sc-val" id="v-army">20</span>
+        <div class="sc-bar"><div class="sc-fill" id="bar-army"></div></div>
+      </div>
+    </div>
+    <div class="stat-chip">
+      <span class="sc-icon">❤</span>
+      <div class="sc-body">
+        <span class="sc-val" id="v-happy">75</span>
+        <div class="sc-bar"><div class="sc-fill" id="bar-happy"></div></div>
+      </div>
+    </div>
+    <div class="stat-chip">
+      <span class="sc-icon">👥</span>
+      <div class="sc-body">
+        <span class="sc-val" id="v-pop">50</span>
+        <div class="sc-bar"><div class="sc-fill" id="bar-pop"></div></div>
+      </div>
+    </div>
+    <button id="btn-pause" class="icon-btn">⏸</button>
+  </div>
+
+  <div id="progress-bar">
+    <div id="progress-fill"></div>
+    <span id="progress-label">Spring · Year 1 of 3</span>
+  </div>
+
+  <div id="sidebar">
+    <div class="sb-label">Your Realm</div>
+    <div id="sb-name"></div>
+    <div id="sb-buildings"></div>
+    <div id="sb-score-row">
+      <span>Score</span><span id="sb-score">0</span>
+    </div>
+    <div class="sb-label" style="margin-top:6px">Achievements</div>
+    <div id="ach-list"></div>
+    <button id="btn-menu" class="hbtn secondary small" style="margin-top:8px">☰ Menu</button>
+  </div>
+
+  <div id="event-panel" class="hidden">
+    <div id="ep-tag"></div>
+    <div id="ep-icon"></div>
+    <h2 id="ep-title"></h2>
+    <p id="ep-body"></p>
+    <div id="ep-choices"></div>
+    <div id="ep-skip" class="hidden">
+      <button id="btn-skip" class="hbtn secondary small">→ Continue</button>
+    </div>
+  </div>
+
+  <div id="outcome-panel" class="hidden">
+    <div id="op-icon"></div>
+    <h2 id="op-title"></h2>
+    <p id="op-body"></p>
+    <div id="op-effects"></div>
+    <button id="btn-next" class="hbtn primary">Continue →</button>
+  </div>
+
+  <div id="toast" class="hidden"></div>
+  <div id="streak-banner" class="hidden">🔥 <span id="streak-banner-txt"></span></div>
+  <div id="ach-popup" class="hidden">
+    <span id="ap-icon"></span>
+    <div><div id="ap-name"></div><div id="ap-desc"></div></div>
+  </div>
+</div>
+
+<!-- GAME OVER -->
+<div id="gameover" class="hidden">
+  <div id="go-card">
+    <div style="font-size:56px">💀</div>
+    <h2 id="go-title" style="color:#f06040;font-family:Georgia,serif;font-style:italic">Kingdom Lost</h2>
+    <p id="go-reason"></p>
+    <div id="go-score"></div>
+    <div id="go-stats"></div>
+    <button id="btn-go-home" class="hbtn primary">Try Again</button>
+    <a id="go-reset" href="#" class="reset-link">⚠ Clear data &amp; reset</a>
+  </div>
+</div>
+
+<!-- VICTORY -->
+<div id="victory" class="hidden">
+  <div id="vic-card">
+    <div style="font-size:60px;animation:glow 2s infinite">👑</div>
+    <h2 id="vic-title" style="color:#f5c842;font-family:Georgia,serif;font-style:italic">Victory!</h2>
+    <p id="vic-body"></p>
+    <div id="vic-score"></div>
+    <div id="vic-stats"></div>
+    <button id="btn-vic-home" class="hbtn primary">Play Again</button>
+    <a id="vic-reset" href="#" class="reset-link">⚠ Clear data &amp; reset</a>
+  </div>
+</div>
+
+<!-- PAUSE -->
+<div id="pause-menu" class="hidden">
+  <div id="pm-card">
+    <h2 style="color:#f5c842;font-family:Georgia,serif;font-style:italic">⏸ Paused</h2>
+    <p id="pm-info" style="color:rgba(232,213,163,.6);font-size:13px;font-family:Georgia,serif;font-style:italic"></p>
+    <button class="hbtn primary" id="btn-resume">▶ Resume</button>
+    <button class="hbtn secondary" id="btn-save-now">💾 Save</button>
+    <button class="hbtn secondary" id="btn-abandon">💀 Abandon</button>
+    <button class="hbtn secondary" id="btn-pm-home">🏠 Home</button>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
